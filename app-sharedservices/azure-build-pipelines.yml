@@ -1,6 +1,11 @@
 trigger:
-- develop
-
+  branches:
+    include:
+    - master
+  paths:
+    include:
+    - app-sharedservices
+    
 pool:
   vmImage: 'ubuntu-latest'
 
