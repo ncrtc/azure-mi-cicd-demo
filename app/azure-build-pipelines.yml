@@ -1,0 +1,20 @@
+trigger:
+  branches:
+    include:
+    - master
+  paths:
+    include:
+    - app
+    
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  buildConfiguration: 'Release'
+
+steps:
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish Artifact: Infrastructure'
+  inputs:
+    PathtoPublish: app/Infrastructure
+    ArtifactName: Infrastructure
