@@ -11,5 +11,5 @@ steps:
 - task: PublishBuildArtifacts@1
   displayName: 'Publish Artifact: Infrastructure'
   inputs:
-    PathtoPublish: Infrastructure
+    PathtoPublish: app-sharedservices/Infrastructure
     ArtifactName: Infrastructure
