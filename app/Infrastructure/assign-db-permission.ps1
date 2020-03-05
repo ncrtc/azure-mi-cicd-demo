@@ -25,6 +25,7 @@ param(
 
 Get-AccessToken -TenantID $tenantId -ServicePrincipalId $clientId -ServicePrincipalPwd $clientSecret `
     -OutVariable token -resourceAppIdURI 'https://database.windows.net/' | Out-null
+
 Write-host "Got token $($token.Substring(0,10))..."
 $sqlServerFQN = "$($sqlServerName).database.windows.net"
 $conn = new-object System.Data.SqlClient.SqlConnection
