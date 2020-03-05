@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using System.Data.SqlClient;
+using Microsoft.Azure.Services.AppAuthentication;
 
 namespace FunctionApi
 {
@@ -21,8 +22,15 @@ namespace FunctionApi
             log.LogInformation("C# HTTP trigger function processed a request.");
 
             var config = context.BuildConfiguraion();
-            using (SqlConnection conn = new SqlConnection(config["SQLConnectionString"]))
+            var provider = new AzureServiceTokenProvider();
+            var accessToken = provider.GetAccessTokenAsync("https://database.windows.net/").Result;
+
+            SqlConnectionStringBuilder csb = new SqlConnectionStringBuilder();
+            csb.DataSource = config["SQLDataSource"];
+            csb.InitialCatalog = "def_db";
+            using (SqlConnection conn = new SqlConnection(csb.ConnectionString))
             {
+                conn.AccessToken = accessToken;
                 conn.Open();
                 var text = "SELECT 1";
 
