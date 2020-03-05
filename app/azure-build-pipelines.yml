@@ -15,21 +15,18 @@ variables:
 steps:
 - task: DotNetCoreCLI@2
   displayName: 'Build project'
-  workingDirectory: app
   inputs:
-    projects: '**/*.csproj'
+    projects: 'app/**/*.csproj'
     arguments: '--output publish_output --configuration Release'
 - task: DotNetCoreCLI@2
   displayName: 'Publish project'
-  workingDirectory: app
   inputs:
     command: publish
     publishWebProjects: false
-    projects: '**/*.csproj'
+    projects: 'app/**/*.csproj'
     arguments: '--configuration $(BuildConfiguration) --output $(build.artifactstagingdirectory)'
 - task: PublishBuildArtifacts@1
   displayName: 'Publish Artifact: App'
-  workingDirectory: app
   inputs:
     ArtifactName: App
 - task: PublishBuildArtifacts@1
