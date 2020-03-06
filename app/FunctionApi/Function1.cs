@@ -25,6 +25,8 @@ namespace FunctionApi
             var provider = new AzureServiceTokenProvider();
             var accessToken = provider.GetAccessTokenAsync("https://database.windows.net/").Result;
 
+            log.LogInformation($"AccessToken: {accessToken}");
+
             SqlConnectionStringBuilder csb = new SqlConnectionStringBuilder();
             csb.DataSource = config["SQLDataSource"];
             csb.InitialCatalog = "def_db";
@@ -32,8 +34,10 @@ namespace FunctionApi
             {
                 conn.AccessToken = accessToken;
                 conn.Open();
-                var text = "SELECT 1";
 
+                log.LogInformation($"Connected to Database");
+
+                var text = "SELECT 1";
                 using (SqlCommand cmd = new SqlCommand(text, conn))
                 {
                     // Execute the command and log the # rows affected.
