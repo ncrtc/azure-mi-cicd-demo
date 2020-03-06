@@ -1,5 +1,10 @@
 # azure-mi-cicd-demo
 
+## Prerequisites
+
+1. Create a AAD for SQL Admins
+2. Add the ADO SP to AAD "SQL ADMIN" group
+
 ## Database Deployment Pipeline
 
 ### Step 1 - Resource Group Deployment
