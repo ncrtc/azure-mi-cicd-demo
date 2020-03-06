@@ -30,6 +30,8 @@ namespace FunctionApi
             SqlConnectionStringBuilder csb = new SqlConnectionStringBuilder();
             csb.DataSource = config["SQLDataSource"];
             csb.InitialCatalog = "def_db";
+            log.LogInformation($"ConnectionString: {csb.ConnectionString}");
+
             using (SqlConnection conn = new SqlConnection(csb.ConnectionString))
             {
                 conn.AccessToken = accessToken;
