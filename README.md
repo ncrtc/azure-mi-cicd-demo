@@ -2,17 +2,35 @@
 
 ## Prerequisites
 
-1. Create a AAD for SQL Admins
-2. Add the ADO SP to AAD "SQL ADMIN" group
+1. Create an Azure AD Group for SQL Admins
+2. Add the Azure DevOps Service Principal to the AAD "SQL ADMIN" group
+#TODO: add notes about how to do/gather these things
 
-## Database Deployment Pipeline
+## Builds
 
-### Step 1 - Resource Group Deployment
+Each service has a corresponding build YAML file in its folder. Please refer to those folders for specific README instructions. 
+
+## Database Deployment Pipeline (i.e., Release)
+
+### General
+
+When creating this release, start with an empty job. Select your artificate from the Shared Service build.  
+
+### Step 1 - Azure Resource Group Deployment task
+
+- Authorize the task to your subscription with the service principal that you added to the "SQL Admin" group.
+- Provide a resource group name (new or existing) and location for where these resources will be deployed.
 
 - Template: $(System.DefaultWorkingDirectory)/_Build/Infrastructure/sql.json
 - Paramaters: -server_name_prefix "micicddbsrv" -database_name "def_db" -encryptionProtector_current_name "current" -firewallRules_AllowAllWindowsAzureIps_name "AllowAllWindowsAzureIps" -transparentDataEncryption_current_name "current" -aadAdminLogin "<AAD-SQL-ADMINS-GROUP>" -aadAdminOid "<AAD-SQL-ADMINS-GROUP-ID>" -db_admin_login <user> -db_admin_pass <password>
+#TODO
+  add information around how to get the object id
+  
+## App Deployment Pipeline (i.e., Release)
 
-## App Deployment Pipeline
+### General
+
+When creating this release, start with an empty job. Select your artificate from the App build.  
 
 ### Varaiables
 
@@ -23,6 +41,9 @@
 - sql-server-name (eg: micicddbsrv2ugmgwdemg5t6)
 - tenant-id (eg: 2e433d32-9cb5-4258-926b-1253c4de44dc)
 
+#TODO: show how to get tenant ID
+#TODO: clarify which of these you are defining and which ones you need to pull
+
 ### Step 1 - Resource Group Deployment
 
 - Template: $(System.DefaultWorkingDirectory)/_Build/Infrastructure/function-app-consumption.json
@@ -32,13 +53,18 @@
 
 - Type: Azure Powershell
 - Script Path: $(System.DefaultWorkingDirectory)/_Build/Infrastructure/find-applicationid.ps1
-Script Arguments: -appName $(app-name)
+- Script Arguments: -appName $(app-name)
+- Version: Latest Installed
 
-### Step 3 - Assign DB Premission
+#TODO: Rename function to PowerShell standard cmdlet verbs
+
+### Step 3 - Assign DB Permission
 
 - Type: Powershell
 - Script Path: $(System.DefaultWorkingDirectory)/_Build/Infrastructure/assign-db-permission.ps1
 - Script Arguments: -appName $(app-name) -appId $(appId) -clientId $(ado-az-sp-client-id) -clientSecret $(ado-az-sp-client-secret) -sqlServerName $(sql-server-name) -sqlDatabaseName def_db -tenantId $(tenant-id)
+
+#TODO: Rename function to PowerShell standard cmdlet verbs
 
 ### Step 4 - Deploy App
 
