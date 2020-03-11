@@ -29,6 +29,7 @@ When creating this release, start with an empty job. Select your artificate from
 
 - Template: $(System.DefaultWorkingDirectory)/_Build/Infrastructure/sql.json
 - Paramaters: -server_name_prefix "micicddbsrv" -database_name "def_db" -encryptionProtector_current_name "current" -firewallRules_AllowAllWindowsAzureIps_name "AllowAllWindowsAzureIps" -transparentDataEncryption_current_name "current" -aadAdminLogin "<AAD-SQL-ADMINS-GROUP>" -aadAdminOid "<AAD-SQL-ADMINS-GROUP-ID>" -db_admin_login <user> -db_admin_pass <password>
+
 #TODO
   add information around how to get the object id
   
