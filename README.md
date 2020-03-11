@@ -40,14 +40,15 @@ When creating this release, start with an empty job. Select your artificate from
 
 ### Varaiables
 
-- ado-az-sp-client-id
-- ado-az-sp-client-secret
+- ado-az-sp-client-id (GUID)
+- ado-az-sp-client-secret (secret from the app registration)
 - app-name (eg: demo-mi-app)
 - app-storage-account-name (eg: micicddbsrv2ugmgwdemg5t6)
 - sql-server-name (eg: micicddbsrv2ugmgwdemg5t6)
 - tenant-id (eg: 2e433d32-9cb5-4258-926b-1253c4de44dc)
 
-#TODO: show how to get tenant ID
+#TODO: show how to get tenant ID, ado client id, and secret
+
 #TODO: clarify which of these you are defining and which ones you need to pull
 
 ### Step 1 - Resource Group Deployment
