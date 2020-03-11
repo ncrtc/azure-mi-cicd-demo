@@ -7,7 +7,10 @@
 3. Add the Azure DevOps Service Principal to the AAD "SQL ADMIN" group
 
 #TODO: add notes about how to do/gather these things
+
 #TODO: add notes about adding the graph permission. NB: This must be done with the v1 Azure Active Directory Graph, not the Microsoft Graph!
+
+#TODO: create script to delete the user from the DB upon recreation
 
 ## Builds
 
