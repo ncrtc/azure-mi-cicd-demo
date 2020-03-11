@@ -3,8 +3,11 @@
 ## Prerequisites
 
 1. Create an Azure AD Group for SQL Admins
-2. Add the Azure DevOps Service Principal to the AAD "SQL ADMIN" group
+2. Add the Graph API "Directory.Read.All" to the Azure DevOps Service Principal
+3. Add the Azure DevOps Service Principal to the AAD "SQL ADMIN" group
+
 #TODO: add notes about how to do/gather these things
+#TODO: add notes about adding the graph permission. 
 
 ## Builds
 
