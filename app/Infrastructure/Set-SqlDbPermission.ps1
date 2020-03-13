@@ -48,7 +48,8 @@ BEGIN
 END
 ELSE
 BEGIN
-   ALTER USER [' + @username + '] WITH DEFAULT_SCHEMA=[dbo], SID = $sid, TYPE = E;
+   DROP USER [' + @username + ']
+   CREATE USER [' + @username + '] WITH DEFAULT_SCHEMA=[dbo], SID = $sid, TYPE = E;
 END
 IF IS_ROLEMEMBER(''db_owner'',''' + @username + ''') = 0
 BEGIN
