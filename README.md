@@ -6,8 +6,6 @@
 2. Add the __v1 Azure Active Directory Graph API__ (at the bottom of the Microsoft APIs) "Directory.Read.All" to the Azure DevOps Service Principal (https://docs.microsoft.com/en-us/graph/notifications-integration-app-registration#api-permissions)
 3. Add the Azure DevOps Service Principal to the AAD "SQL ADMIN" group
 
-#TODO: create script to delete the user from the DB upon recreation
-
 ## Builds
 
 Each service has a corresponding build YAML file in its folder. Please refer to those folders for specific README instructions. 
