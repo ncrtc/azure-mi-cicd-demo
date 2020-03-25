@@ -3,7 +3,7 @@
 ## Prerequisites
 
 1. Create an Azure AD Group for SQL Admins (if you need more instructions, https://docs.microsoft.com/en-us/azure/active-directory/fundamentals/active-directory-groups-create-azure-portal)
-2. Add the __v1 Azure Active Directory Graph API__ (at the bottom of the Microsoft APIs) "Directory.Read.All" to the Azure DevOps Service Principal (https://docs.microsoft.com/en-us/graph/notifications-integration-app-registration#api-permissions)
+2. Add the __v1 Azure Active Directory Graph API__ (at the bottom of the Microsoft APIs) "Directory.Read.All" to the Azure DevOps Service Principal (https://docs.microsoft.com/en-us/graph/notifications-integration-app-registration#api-permissions) ![alt text](https://github.com/ncrtc/azure-mi-cicd-demo/azure_ad_graph.png "Image highlighting the Azure AD Graph icon")
 3. Add the Azure DevOps Service Principal to the AAD "SQL ADMIN" group
 
 ## Builds
