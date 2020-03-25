@@ -65,7 +65,7 @@ When creating this release, start with an empty job. Select your artificate from
 ### Step 3 - Assign DB Permission
 
 - Type: Powershell
-- Script Path: $(System.DefaultWorkingDirectory)/_Build/Infrastructure/assign-db-permission.ps1
+- Script Path: $(System.DefaultWorkingDirectory)/_Build/Infrastructure/Set-SqlDbpermission.ps1
 - Script Arguments: -appName $(app-name) -appId $(appId) -clientId $(ado-az-sp-client-id) -clientSecret $(ado-az-sp-client-secret) -sqlServerName $(sql-server-name) -sqlDatabaseName def_db -tenantId $(tenant-id)
 
 #TODO: Rename function to PowerShell standard cmdlet verbs
