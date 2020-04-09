@@ -54,17 +54,15 @@ When creating this release, start with an empty job. Select your artificate from
 ### Step 2 - Get MI Application Id
 
 - Type: Azure Powershell
-- Script Path: $(System.DefaultWorkingDirectory)/_Build/Infrastructure/find-applicationid.ps1
+- Script Path: $(System.DefaultWorkingDirectory)/_Build/Infrastructure/Get-ApplicationId.ps1
 - Script Arguments: -appName $(app-name)
 - Version: Latest Installed
-
-#TODO: Rename function to PowerShell standard cmdlet verbs
 
 ### Step 3 - Assign DB Permission
 
 - Type: Powershell
-- Script Path: $(System.DefaultWorkingDirectory)/_Build/Infrastructure/Set-SqlDbpermission.ps1
-- Script Arguments: -appName $(app-name) -appId $(appId) -clientId $(ado-az-sp-client-id) -clientSecret $(ado-az-sp-client-secret) -sqlServerName $(sql-server-name) -sqlDatabaseName def_db -tenantId $(tenant-id)
+- Script Path: $(System.DefaultWorkingDirectory)/_Build/Infrastructure/Invoke-SqlStatement.ps1
+- Script Arguments: -appName $(app-name) -appId $(appId) -clientId $(ado-az-sp-client-id) -clientSecret $(ado-az-sp-client-secret) -sqlServerName $(sql-server-name) -sqlDatabaseName def_db -tenantId $(tenant-id) -sqlFile $(System.DefaultWorkingDirectory)/_build-app/Infrastructure/permissions.sql
 
 ### Step 4 - Deploy App
 
