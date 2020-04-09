@@ -36,6 +36,12 @@ $conn.AccessToken = $token
 
 $stmt = Get-Content $sqlFile
 
+Write-host $stmt
+write-host $appId
+write-host $appName
+$type = $stmt | gm
+write-host $type
+
 if ($appId) {
     $sid = ConvertTo-Sid -appId $appId
     $stmt = $stmt.Replace('$sid', $sid)
