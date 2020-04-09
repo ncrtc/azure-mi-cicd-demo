@@ -36,7 +36,7 @@ $conn.AccessToken = $token
 
 write-host $sqlFile
 
-$stmt = Get-Content $sqlFile
+$stmt = Get-Content $sqlFile -Raw
 
 Write-host $stmt
 write-host $appId
