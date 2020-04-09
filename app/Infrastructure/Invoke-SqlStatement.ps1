@@ -34,6 +34,8 @@ $conn = new-object System.Data.SqlClient.SqlConnection
 $conn.ConnectionString = "Server=tcp:$($sqlServerFQN),1433;Initial Catalog=$($sqlDatabaseName);Persist Security Info=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;" 
 $conn.AccessToken = $token
 
+write-host $sqlFile
+
 $stmt = Get-Content $sqlFile
 
 Write-host $stmt
