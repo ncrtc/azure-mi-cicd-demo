@@ -1,8 +1,8 @@
 param(
-    [Parameter(Mandatory)]
+    [Parameter(Mandatory=$false)]
     [ValidateLength(5,128)]
     [string]$appName,
-    [Parameter(Mandatory)]
+    [Parameter(Mandatory=$false)]
     [ValidatePattern('(\{|\()?[A-Za-z0-9]{4}([A-Za-z0-9]{4}\-?){4}[A-Za-z0-9]{12}(\}|\()?')]
     [string]$appId,
     [Parameter(Mandatory)]
@@ -19,7 +19,9 @@ param(
     [string]$sqlDatabaseName,
     [Parameter(Mandatory)]
     [ValidatePattern('(\{|\()?[A-Za-z0-9]{4}([A-Za-z0-9]{4}\-?){4}[A-Za-z0-9]{12}(\}|\()?')]
-    [string]$tenantId
+    [string]$tenantId,
+    [Parameter(Mandatory)]
+    [string]$sqlFile
 )
 . $PSScriptRoot\helper-functions.ps1
 
@@ -32,29 +34,17 @@ $conn = new-object System.Data.SqlClient.SqlConnection
 $conn.ConnectionString = "Server=tcp:$($sqlServerFQN),1433;Initial Catalog=$($sqlDatabaseName);Persist Security Info=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;" 
 $conn.AccessToken = $token
 
-$sid = ConvertTo-Sid -appId $appId
+$stmt = Get-Content $sqlFile
+
+if ($appId) {
+    $sid = ConvertTo-Sid -appId $appId
+    $stmt = $stmt.Replace('$sid', $sid)
+}
+
+if ($appName) {
+    $stmt = $stmt.Replace('$appName', $appName)
+}
 
 Write-host "Connecting to database $($conn.ConnectionString)"
-Write-SqlNonQuery -connection $conn -stmt @"
-DECLARE @username VARCHAR(60)
-SET @username = '$appName'
-
-DECLARE @stmt VARCHAR(MAX)
-
-SET @stmt = '
-IF NOT EXISTS(SELECT 1 FROM sys.database_principals WHERE name =''' + @username +''')
-BEGIN
-    CREATE USER [' + @username + '] WITH DEFAULT_SCHEMA=[dbo], SID = $sid, TYPE = E;
-END
-ELSE
-BEGIN
-   DROP USER [' + @username + ']
-   CREATE USER [' + @username + '] WITH DEFAULT_SCHEMA=[dbo], SID = $sid, TYPE = E;
-END
-IF IS_ROLEMEMBER(''db_owner'',''' + @username + ''') = 0
-BEGIN
-    ALTER ROLE db_owner ADD MEMBER ['+ @username +']
-END'
-EXEC(@stmt)
-"@ | Out-Null 
+Write-SqlNonQuery -connection $conn -stmt $stmt | Out-Null 
 $conn.Close()
